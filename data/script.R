@@ -19,7 +19,7 @@ datas <- character(0)
 ano_atual <- as.integer(format(data_atual, "%Y"))
 mes_atual <- as.integer(format(data_atual, "%m"))
 
-for (ano in 2018:ano_atual) {
+for (ano in 2019:ano_atual) {
   max_mes <- ifelse(ano == ano_atual, mes_atual, 12)  # Limitar ao mês atual
   for (mes in 1:max_mes) {
     date <- sprintf("%d%02d", ano, mes) # Formate a data no estilo "YYYYMM"
