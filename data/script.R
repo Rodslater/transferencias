@@ -103,5 +103,5 @@ saveRDS(transferencias, 'data/transferencias.rds')
 saveRDS(FPM, 'data/FPM.rds')
 
 
-write.csv(transferencias, "transferencias.csv", row.names = FALSE)
-write.csv(FPM, "FPM.csv", row.names = FALSE)
+write.csv(transferencias, "data/transferencias.csv", row.names = FALSE)
+write.csv(FPM, "data/FPM.csv", row.names = FALSE)
