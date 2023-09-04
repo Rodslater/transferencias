@@ -19,7 +19,7 @@ datas <- character(0)
 ano_atual <- as.integer(format(data_atual, "%Y"))
 mes_atual <- as.integer(format(data_atual, "%m"))
 
-for (ano in 2019:ano_atual) {
+for (ano in 2023:ano_atual) {
   max_mes <- ifelse(ano == ano_atual, mes_atual, 12)  # Limitar ao mês atual
   for (mes in 1:max_mes) {
     date <- sprintf("%d%02d", ano, mes) # Formate a data no estilo "YYYYMM"
@@ -75,13 +75,6 @@ num_cores <- parallel::detectCores()
 results <- foreach(data = datas, .packages = c("httr", "lubridate"), .combine = c) %dopar% {
   download_and_process(data)
 }
-
-# Verifica se algum arquivo retornou NULL (não encontrado ou erro)
-null_results <- which(sapply(results, is.null))
-if (length(null_results) > 0) {
-  message("Alguns arquivos não foram encontrados ou ocorreram erros.")
-}
-
 
 
 transferencias <- list.files(pattern = "\\.csv$", full.names = TRUE) 
