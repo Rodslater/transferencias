@@ -13,7 +13,7 @@ links <- site %>%
   html_attr("href")
 
 # Filtrar os links 
-links <- grep("TransferenciaMensalMunicipios2018|TransferenciaMensalMunicipios2019|TransferenciaMensalMunicipios202.*\\.csv$", links, value = TRUE)
+links <- grep("TransferenciaMensalMunicipios2019|TransferenciaMensalMunicipios202.*\\.csv$", links, value = TRUE)
 # Baixar e salvar os arquivos com seus nomes originais
 
 
