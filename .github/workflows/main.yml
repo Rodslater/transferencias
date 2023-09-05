@@ -20,13 +20,8 @@ jobs:
         with:
           packages: |
             any::dplyr
-            any::tidyr
-            any::stringr
-            any::downloader
-            any::lubridate
+            any::rvest
             any::data.table
-            any::httr
-            any::doParallel
             
       - name: Execute Script
         run: |
