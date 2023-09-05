@@ -82,6 +82,8 @@ transferencias_tesouro <- rbindlist(lapply(transferencias_tesouro, function(file
 
 transferencias_tesouro <- transferencias_tesouro |> 
   filter(UF == 'SE') |> 
+  mutate_at(vars(c("1º Decêndio", "2º Decêndio", "3º Decêndio")), as.numeric) |> 
+  unite(ANO, ANO, Ano, sep = "", na.rm = TRUE) |> 
   relocate(.after = last_col(), contains("Decêndio")) |> 
   mutate(Mês = ymd(paste0(ANO, "-", Mês, "-01")),
          `Valor total` = `1º Decêndio`+`2º Decêndio`+`3º Decêndio`,
@@ -91,6 +93,7 @@ transferencias_tesouro <- transferencias_tesouro |>
                                TRUE ~ Município)) |> 
   select(-c(V10, UF, ANO)) |> 
   relocate(Mês, .before = everything())
+
 
 arquivos_csv <- dir(pattern = ".csv")
 file.remove(arquivos_csv)  
