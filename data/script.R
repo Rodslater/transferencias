@@ -75,17 +75,18 @@ file.remove(arquivos_csv)
 
 
 transferencias_tesouro <- transferencias_tesouro |> 
+  select(-starts_with("V") |> 
   filter(UF == 'SE') |> 
   mutate_at(vars(c("1º Decêndio", "2º Decêndio", "3º Decêndio")), as.numeric) |> 
   unite(ANO, ANO, Ano, sep = "", na.rm = TRUE) |> 
   relocate(.after = last_col(), contains("Decêndio")) |> 
   mutate(Mês = ymd(paste0(ANO, "-", Mês, "-01")),
-         `Valor total` = `1º Decêndio`+`2º Decêndio`+`3º Decêndio`,
+         `Valor mensal` = `1º Decêndio`+`2º Decêndio`+`3º Decêndio`,
          Município = case_when(Município  == 'Amparo de São Francisco' ~ 'Amparo do São Francisco',
                                Município  == 'Gracho Cardoso' ~ 'Graccho Cardoso',
                                Município  == 'Itaporanga DAjuda' ~ "Itaporanga D'Ajuda",
                                TRUE ~ Município)) |> 
-  select(-starts_with("V"), -c("UF", "ANO")) |> 
+  select(-c("UF", "ANO")) |> 
   relocate(Mês, .before = everything())
 
 
