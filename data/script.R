@@ -22,7 +22,8 @@ transferencias_tesouro <- list.files(pattern = "\\.csv$", full.names = TRUE)
 
 transferencias_tesouro <- rbindlist(lapply(transferencias_tesouro, function(file) {
   fread(file, encoding = "Latin-1")
-}))
+}), fill = TRUE)
+#fill = TRUE, para quando há divergência no número de colunas
 
 
 transferencias_tesouro <- transferencias_tesouro |> 
