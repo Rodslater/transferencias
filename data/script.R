@@ -1,4 +1,5 @@
 library(dplyr)
+library(tidyr)
 library(rvest)
 library(data.table)
 library(lubridate)
