@@ -19,7 +19,6 @@ links <- grep("TransferenciaMensalMunicipios2023.*\\.csv$", links, value = TRUE)
 
 ###Teste em paralelo
 
-
 # Função para baixar e processar um arquivo
 download_and_process <- function(url) {
   arquivo <- sub(".*/", "", url)  # Obtém o nome do arquivo do URL
@@ -68,7 +67,6 @@ registerDoParallel(cores = num_cores)
 results <- foreach(url = urls, .packages = c("httr", "lubridate"), .combine = c) %dopar% {
   download_and_process(url)
 }
-
 
 
 transferencias_tesouro <- list.files(pattern = "\\.csv$", full.names = TRUE) 
