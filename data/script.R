@@ -1,6 +1,7 @@
 library(dplyr)
 library(rvest)
 library(data.table)
+library(lubridate)
 
 site <- read_html("https://www.tesourotransparente.gov.br/ckan/dataset/transferencias-constitucionais-para-municipios")
 
