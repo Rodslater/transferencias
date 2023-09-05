@@ -14,10 +14,7 @@ links <- site %>%
 
 # Filtrar os links 
 links <- grep("TransferenciaMensalMunicipios2023.*\\.csv$", links, value = TRUE)
-# Baixar e salvar os arquivos com seus nomes originais
 
-
-###Teste em paralelo
 
 # Função para baixar e processar um arquivo
 download_and_process <- function(url) {
@@ -43,11 +40,6 @@ download_and_process <- function(url) {
     {
       download.file(url, destfile = arquivo, mode = "wb")
       unzip(arquivo)
-      file.remove(arquivo)
-      arquivos_csv <- list.files(pattern = "\\.csv$", full.names = TRUE)
-      padroes_mantidos <- c("\\.csv$")
-      arquivos_remover <- arquivos_csv[!grepl(paste(padroes_mantidos, collapse = "|"), arquivos_csv)]
-      file.remove(arquivos_remover)
     },
     error = function(e) {
       message(paste("Erro ao baixar o arquivo:", arquivo))
@@ -67,6 +59,7 @@ registerDoParallel(cores = num_cores)
 results <- foreach(url = urls, .packages = c("httr", "lubridate"), .combine = c) %dopar% {
   download_and_process(url)
 }
+
 
 
 transferencias_tesouro <- list.files(pattern = "\\.csv$", full.names = TRUE) 
@@ -91,16 +84,3 @@ transferencias_tesouro <- transferencias_tesouro |>
                                TRUE ~ Município)) |> 
   select(-c(V10, UF, ANO)) |> 
   relocate(Mês, .before = everything())
-
-
-arquivos_csv <- dir(pattern = ".csv")
-file.remove(arquivos_csv)  
-
-FPM_tesouro <- transferencias_tesouro |> 
-  filter(Transferência == 'FPM') 
-
-saveRDS(transferencias_tesouro, 'data/transferencias_tesouro.rds')
-saveRDS(FPM_tesouro, 'data/FPM_tesouro.rds')
-
-write.csv(transferencias_tesouro, "data/transferencias_tesouro.csv", row.names = FALSE)
-write.csv(FPM_tesouro, "data/FPM_tesouro.csv", row.names = FALSE)
