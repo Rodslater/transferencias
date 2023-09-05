@@ -23,6 +23,8 @@ jobs:
             any::rvest
             any::data.table
             any::lubridate
+            any::doParallel
+            any:httr
             
       - name: Execute Script
         run: |
