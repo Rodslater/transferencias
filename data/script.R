@@ -75,7 +75,7 @@ file.remove(arquivos_csv)
 
 
 transferencias_tesouro <- transferencias_tesouro |> 
-  select(-starts_with("V") |> 
+  select(-starts_with("V")) |> 
   filter(UF == 'SE') |> 
   mutate_at(vars(c("1º Decêndio", "2º Decêndio", "3º Decêndio")), as.numeric) |> 
   unite(ANO, ANO, Ano, sep = "", na.rm = TRUE) |> 
