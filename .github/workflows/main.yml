@@ -24,7 +24,7 @@ jobs:
             any::data.table
             any::lubridate
             any::doParallel
-            any:httr
+            any::httr
             
       - name: Execute Script
         run: |
