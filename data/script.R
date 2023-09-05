@@ -85,7 +85,7 @@ transferencias_tesouro <- transferencias_tesouro |>
                                Município  == 'Gracho Cardoso' ~ 'Graccho Cardoso',
                                Município  == 'Itaporanga DAjuda' ~ "Itaporanga D'Ajuda",
                                TRUE ~ Município)) |> 
-  select(-c(V10, UF, ANO)) |> 
+  select(-starts_with("V"), -c("UF", "ANO")) |> 
   relocate(Mês, .before = everything())
 
 
