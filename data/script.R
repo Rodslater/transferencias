@@ -86,8 +86,6 @@ transferencias_tesouro <- rbindlist(lapply(transferencias_tesouro, function(file
 arquivos_csv <- dir(pattern = ".csv")
 file.remove(arquivos_csv)  
 
-FPM_tesouro <- transferencias_tesouro |> 
-  filter(Transferência == 'FPM') 
 
 write.csv(transferencias_tesouro, "data/transferencias_tesouro.csv", row.names = FALSE)
-write.csv(FPM_tesouro, "data/FPM_tesouro.csv", row.names = FALSE)
+
