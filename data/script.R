@@ -70,6 +70,9 @@ transferencias_tesouro <- rbindlist(lapply(transferencias_tesouro, function(file
 #fill = TRUE, para quando há divergência no número de colunas
 
 
+arquivos_csv <- dir(pattern = ".csv")
+file.remove(arquivos_csv)  
+
 
 transferencias_tesouro <- transferencias_tesouro |> 
   filter(UF == 'SE') |> 
@@ -84,3 +87,14 @@ transferencias_tesouro <- transferencias_tesouro |>
                                TRUE ~ Município)) |> 
   select(-c(V10, UF, ANO)) |> 
   relocate(Mês, .before = everything())
+
+
+FPM_tesouro <- transferencias_tesouro |> 
+  filter(Transferência == 'FPM') 
+
+
+saveRDS(transferencias_tesouro, 'data/transferencias_tesouro.rds')
+saveRDS(FPM_tesouro, 'data/FPM_tesouro.rds')
+
+write.csv(transferencias_tesouro, "data/transferencias_tesouro.csv", row.names = FALSE)
+write.csv(FPM_tesouro, "data/FPM_tesouro.csv", row.names = FALSE)
