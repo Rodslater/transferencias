@@ -20,6 +20,7 @@ jobs:
         with:
           packages: |
             any::dplyr
+            any::tidyr
             any::rvest
             any::data.table
             any::lubridate
