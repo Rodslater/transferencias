@@ -5,7 +5,6 @@ library(data.table)
 library(lubridate)
 library(httr)
 library(doParallel)
-library(sidrar)
 
 site <- read_html("https://www.tesourotransparente.gov.br/ckan/dataset/transferencias-constitucionais-para-municipios")
 
@@ -92,14 +91,7 @@ transferencias_tesouro <- transferencias_tesouro |>
 
 
 ### IPCA ###
-
-ano_inicial <- year(min(transferencias_tesouro$Mês))
-ano_final <- year(max(transferencias_tesouro$Mês))
-periodo_ipca <- paste0(ano_inicial,'01','-',ano_final,'12')
-
-ipca <- get_sidra(x = 1737,
-                  variable = 2266,
-                  period = periodo_ipca)
+ipca <- readRDS(url("https://github.com/Rodslater/inflacao/raw/main/data/ipca.rds"))
 
 ipca <- ipca |> 
   select(c(8,5)) |> 
@@ -108,7 +100,6 @@ ipca <- ipca |>
   mutate(Mês = ymd(paste(substr(Mês, 1, 4), substr(Mês, 5, 6), "01", sep = "-")))
 
 ############
-
 
 
 transferencias_tesouro <- transferencias_tesouro |> 
