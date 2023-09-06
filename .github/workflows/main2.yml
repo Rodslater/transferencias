@@ -17,7 +17,7 @@ jobs:
       - name: Set up R
         uses: r-lib/actions/setup-r@v1
         with:
-          r-version: '4.x'  # Specify the R version you need
+          r-version: 'latest'  # Install the latest version of R
 
       - name: Install R dependencies
         run: |
@@ -26,10 +26,6 @@ jobs:
       - name: Execute Script ipca
         run: |
           Rscript "data/ipca.R"
-
-      - name: Execute Script
-        run: |
-          Rscript "data/script.R"
 
       - name: Commit results and push to GitHub
         run: |
