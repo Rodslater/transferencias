@@ -27,10 +27,13 @@ jobs:
             any::doParallel
             any::httr
             any::sidrar
-            
+
+      - name: Execute Script ipca
+        run: |
+          Rscript "data/ipca.R"   
+          
       - name: Execute Script
         run: |
-          Rscript "data/ipca.R"
           Rscript "data/script.R"
       - name: Commit results
         run: |
