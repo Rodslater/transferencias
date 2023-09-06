@@ -5,6 +5,7 @@ library(data.table)
 library(lubridate)
 library(httr)
 library(doParallel)
+library(sidrar)
 
 site <- read_html("https://www.tesourotransparente.gov.br/ckan/dataset/transferencias-constitucionais-para-municipios")
 
@@ -88,6 +89,34 @@ transferencias_tesouro <- transferencias_tesouro |>
                                TRUE ~ Município)) |> 
   select(-c("UF", "ANO")) |> 
   relocate(Mês, .before = everything())
+
+
+### IPCA ###
+
+ano_inicial <- year(min(transferencias_tesouro$Mês))
+ano_final <- year(max(transferencias_tesouro$Mês))
+periodo_ipca <- paste0(ano_inicial,'01','-',ano_final,'12')
+
+ipca <- get_sidra(x = 1737,
+                  variable = 2266,
+                  period = periodo_ipca)
+
+ipca <- ipca |> 
+  select(c(8,5)) |> 
+  rename(indice_ipca = Valor ,
+         Mês = `Mês (Código)`) |> 
+  mutate(Mês = ymd(paste(substr(Mês, 1, 4), substr(Mês, 5, 6), "01", sep = "-")))
+
+############
+
+
+
+transferencias_tesouro <- transferencias_tesouro |> 
+  left_join(ipca, by = 'Mês' ) |> 
+  fill(indice_ipca, .direction = 'down') |> 
+  mutate(inflacao = tail(indice_ipca, n=1)/indice_ipca,
+         `Valor mensal real IPCA` = round(`Valor mensal`*inflacao,2)) |> 
+  select(-c(inflacao, indice_ipca))
 
 
 FPM_tesouro <- transferencias_tesouro |> 
