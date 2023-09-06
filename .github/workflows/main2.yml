@@ -7,7 +7,7 @@ name: 02-rscript
 
 jobs:
   run-r-script:
-    runs-on: macOS-11
+    runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
