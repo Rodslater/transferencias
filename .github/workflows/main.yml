@@ -28,13 +28,10 @@ jobs:
             any::httr
             any::sidrar
 
-      - name: Execute Script ipca
-        run: |
-          Rscript "data/ipca.R"   
-          
       - name: Execute Script
         run: |
           Rscript "data/script.R"
+          
       - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
