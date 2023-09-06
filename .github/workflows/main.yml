@@ -30,6 +30,7 @@ jobs:
             
       - name: Execute Script
         run: |
+          Rscript "data/ipca.R"
           Rscript "data/script.R"
       - name: Commit results
         run: |
