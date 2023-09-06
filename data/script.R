@@ -93,12 +93,6 @@ transferencias_tesouro <- transferencias_tesouro |>
 ### IPCA ###
 ipca <- readRDS(url("https://github.com/Rodslater/inflacao/raw/main/data/ipca.rds"))
 
-ipca <- ipca |> 
-  select(c(8,5)) |> 
-  rename(indice_ipca = Valor ,
-         Mês = `Mês (Código)`) |> 
-  mutate(Mês = ymd(paste(substr(Mês, 1, 4), substr(Mês, 5, 6), "01", sep = "-")))
-
 ############
 
 
