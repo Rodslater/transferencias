@@ -26,6 +26,7 @@ jobs:
             any::lubridate
             any::doParallel
             any::httr
+            any::sidrar
             
       - name: Execute Script
         run: |
